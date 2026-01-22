@@ -11,8 +11,6 @@ interface TopBarProps {
   onFinish: () => void;
   onSolve: () => void;
   onUndo: () => void;
-  reducedMotion: boolean;
-  onToggleReducedMotion: () => void;
 }
 
 export function TopBar({
@@ -22,8 +20,6 @@ export function TopBar({
   onFinish,
   onSolve,
   onUndo,
-  reducedMotion,
-  onToggleReducedMotion,
 }: TopBarProps) {
   return (
     <div className="top-bar">
@@ -46,14 +42,6 @@ export function TopBar({
             Undo
           </button>
         </div>
-        <label className="motion-toggle">
-          <input
-            type="checkbox"
-            checked={reducedMotion}
-            onChange={onToggleReducedMotion}
-          />
-          <span>Reduced motion</span>
-        </label>
       </div>
     </div>
   );

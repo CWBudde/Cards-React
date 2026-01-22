@@ -11,9 +11,9 @@ export interface LayoutDimensions {
   foundationSpacing: number;
 }
 
-const CARD_ASPECT_RATIO = 0.7; // width / height
-const MIN_CARD_WIDTH = 60;
-const MAX_CARD_WIDTH = 120;
+const CARD_ASPECT_RATIO = 0.75; // width / height (6em / 8em from original)
+const MIN_CARD_WIDTH = 80;
+const MAX_CARD_WIDTH = 150;
 
 export function useLayout(): LayoutDimensions {
   const [dimensions, setDimensions] = useState<LayoutDimensions>(() =>
@@ -49,27 +49,29 @@ function calculateDimensions(): LayoutDimensions {
   // Reserve space for top bar and margins
   const topBarHeight = 80;
   const foundationsHeight = 160;
-  const margins = 40;
+  const margins = 32;
   const availableWidth = viewportWidth - margins;
   const availableHeight =
     viewportHeight - topBarHeight - foundationsHeight - margins;
 
   // Calculate card width based on fitting 8 tableau piles with spacing
-  const tableauSpacing = 8;
+  const tableauSpacing = 12;
   const maxCardWidthFromTableau = (availableWidth - tableauSpacing * 7) / 8;
 
   // Calculate card width based on available height
-  // Assume maximum 20 overlapping cards in a pile
-  const maxOverlappingCards = 20;
-  const overlapFactor = 0.25; // Each card overlaps by 25% of height
+  // Assume maximum 15 overlapping cards in a pile (more realistic)
+  const maxOverlappingCards = 15;
+  const overlapFactor = 0.3; // Each card overlaps by 30% of height
   const maxCardHeightFromTableau =
     availableHeight / (1 + maxOverlappingCards * overlapFactor);
   const maxCardWidthFromHeight = maxCardHeightFromTableau * CARD_ASPECT_RATIO;
 
   // Choose the smaller constraint and clamp to min/max
+  // Use a weighted average to prevent too-small cards in medium viewports
+  const idealWidth = Math.min(maxCardWidthFromTableau, maxCardWidthFromHeight);
   const cardWidth = Math.max(
     MIN_CARD_WIDTH,
-    Math.min(MAX_CARD_WIDTH, maxCardWidthFromTableau, maxCardWidthFromHeight)
+    Math.min(MAX_CARD_WIDTH, idealWidth)
   );
 
   const cardHeight = cardWidth / CARD_ASPECT_RATIO;
