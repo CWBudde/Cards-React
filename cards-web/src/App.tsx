@@ -38,35 +38,7 @@ interface DragState {
   isTargetValid: boolean;
 }
 
-const REDUCED_MOTION_STORAGE_KEY = "cards-reduced-motion";
-
-function readReducedMotionPreference(): boolean | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  try {
-    const raw = window.localStorage.getItem(REDUCED_MOTION_STORAGE_KEY);
-    if (raw === null) {
-      return null;
-    }
-    return raw === "1";
-  } catch {
-    return null;
-  }
-}
-
-function storeReducedMotionPreference(value: boolean): void {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem(REDUCED_MOTION_STORAGE_KEY, value ? "1" : "0");
-  } catch {
-    // Ignore storage errors
-  }
-}
+const HOVER_HIGHLIGHT_DELAY_MS = 180;
 
 function getSystemReducedMotion(): boolean {
   if (typeof window === "undefined") {
@@ -109,14 +81,16 @@ function App() {
   const layout = useLayout();
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [confettiActive, setConfettiActive] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(() => {
-    const stored = readReducedMotionPreference();
-    return stored ?? getSystemReducedMotion();
-  });
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    getSystemReducedMotion()
+  );
   const dragCaptureRef = useRef<HTMLElement | null>(null);
   const dragPreviewRef = useRef<HTMLDivElement | null>(null);
   const dragPositionRef = useRef({ x: 0, y: 0 });
   const dragStateRef = useRef<DragState | null>(null);
+  const hoverTimeoutRef = useRef<number | null>(null);
+  const [hoverTarget, setHoverTarget] = useState<DropTarget | null>(null);
+  const [hoverIsValid, setHoverIsValid] = useState(false);
   const hasWonRef = useRef(false);
 
   const handleFinish = () => {
@@ -176,12 +150,39 @@ function App() {
     dragStateRef.current = dragState;
   }, [dragState]);
 
-  useEffect(() => {
-    const stored = readReducedMotionPreference();
-    if (stored !== null) {
-      return;
+  const clearHoverTimeout = useCallback(() => {
+    if (hoverTimeoutRef.current !== null) {
+      window.clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
     }
+  }, []);
 
+  const scheduleHoverHighlight = useCallback(
+    (target: DropTarget | null, isTargetValid: boolean) => {
+      if (!target) {
+        clearHoverTimeout();
+        setHoverTarget(null);
+        setHoverIsValid(false);
+        return;
+      }
+
+      if (
+        areTargetsEqual(target, hoverTarget) &&
+        hoverIsValid === isTargetValid
+      ) {
+        return;
+      }
+
+      clearHoverTimeout();
+      hoverTimeoutRef.current = window.setTimeout(() => {
+        setHoverTarget(target);
+        setHoverIsValid(isTargetValid);
+      }, HOVER_HIGHLIGHT_DELAY_MS);
+    },
+    [clearHoverTimeout, hoverIsValid, hoverTarget]
+  );
+
+  useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
@@ -211,14 +212,6 @@ function App() {
       setConfettiActive(false);
     }
   }, [reducedMotion]);
-
-  const toggleReducedMotion = useCallback(() => {
-    setReducedMotion((prev) => {
-      const next = !prev;
-      storeReducedMotionPreference(next);
-      return next;
-    });
-  }, []);
 
   const updateDragPreviewPosition = useCallback((x: number, y: number) => {
     const preview = dragPreviewRef.current;
@@ -313,6 +306,8 @@ function App() {
       const target = getDropTargetFromPoint(event.clientX, event.clientY);
       const isTargetValid = isValidDropTarget(gameState, current, target);
 
+      scheduleHoverHighlight(target, isTargetValid);
+
       if (
         areTargetsEqual(current.target, target) &&
         current.isTargetValid === isTargetValid
@@ -347,6 +342,7 @@ function App() {
       gameState,
       getDropTargetFromPoint,
       isValidDropTarget,
+      scheduleHoverHighlight,
       updateDragPreviewPosition,
     ]
   );
@@ -394,6 +390,9 @@ function App() {
       });
 
       dragStateRef.current = null;
+      clearHoverTimeout();
+      setHoverTarget(null);
+      setHoverIsValid(false);
 
       if (
         dragCaptureRef.current &&
@@ -407,8 +406,18 @@ function App() {
       }
       dragCaptureRef.current = null;
     },
-    [performMove]
+    [clearHoverTimeout, performMove]
   );
+
+  useEffect(() => {
+    if (dragState) {
+      return;
+    }
+
+    clearHoverTimeout();
+    setHoverTarget(null);
+    setHoverIsValid(false);
+  }, [clearHoverTimeout, dragState]);
 
   useEffect(() => {
     if (!dragState) {
@@ -576,8 +585,6 @@ function App() {
         onFinish={handleFinish}
         onSolve={handleSolve}
         onUndo={performUndo}
-        reducedMotion={reducedMotion}
-        onToggleReducedMotion={toggleReducedMotion}
       />
       <Foundations
         foundations={gameState.foundations}
@@ -590,10 +597,8 @@ function App() {
             ? { foundationIndex: dragState.source.foundationIndex }
             : null
         }
-        dropTarget={
-          dragState?.target?.type === "foundation" ? dragState.target : null
-        }
-        isDropTargetValid={dragState?.isTargetValid ?? false}
+        dropTarget={hoverTarget?.type === "foundation" ? hoverTarget : null}
+        isDropTargetValid={hoverIsValid}
       />
       <Tableau
         tableau={gameState.tableau}
@@ -610,10 +615,8 @@ function App() {
               }
             : null
         }
-        dropTarget={
-          dragState?.target?.type === "tableau" ? dragState.target : null
-        }
-        isDropTargetValid={dragState?.isTargetValid ?? false}
+        dropTarget={hoverTarget?.type === "tableau" ? hoverTarget : null}
+        isDropTargetValid={hoverIsValid}
       />
       {dragState ? (
         <div className="drag-layer">

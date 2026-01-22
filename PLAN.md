@@ -169,7 +169,7 @@ Goal: moving cards feels right.
 
 #### Visual affordances
 - [x] Highlight valid target during drag.
-- [ ] Optional: legacy-like delayed highlight when hovering.
+- [x] Optional: legacy-like delayed highlight when hovering.
 
 #### Keyboard
 - [x] Map `n/r/f/s/u` to New/Retry/Finish/Solve/Undo.
@@ -196,7 +196,7 @@ Goal: match the legacy “quality-of-life” helpers.
 #### Confetti
 - [x] Implement a canvas-based confetti overlay component.
 - [x] Trigger confetti on win.
-- [ ] Add reduced-motion toggle (optional but recommended).
+- [x] Add reduced-motion toggle (optional but recommended).
 
 #### Seed handling
 - [x] New: create new seed and start a new game.
