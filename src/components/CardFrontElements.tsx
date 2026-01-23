@@ -31,11 +31,10 @@ export const CardFrontContainer = ({
 }: CardFrontContainerProps) => {
   return (
     <div
-      className={`card card-front card-${suitName} relative rounded-[0.3em] shadow-[1px_1px_4px_rgba(0,0,0,0.5)] select-none cursor-pointer touch-none text-black flex flex-col justify-between box-border${className ? ` ${className}` : ""}`}
+      className={`card card-front card-${suitName} relative rounded-[0.3em] shadow-[1px_1px_4px_rgba(0,0,0,0.5)] select-none cursor-pointer touch-none text-black flex flex-col justify-between box-border p-[7px]${className ? ` ${className}` : ""}`}
       style={{
         width: `${width}px`,
         height: `${height}px`,
-        padding: "7px",
         background: "linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%)",
         ...style,
       }}

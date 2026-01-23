@@ -56,12 +56,5 @@ export const CardBackOrnamentPattern = () => {
 };
 
 export const CardBackStripePattern = () => {
-  return (
-    <div
-      className="w-4/5 h-4/5 rounded"
-      style={{
-        backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px), repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px)`,
-      }}
-    />
-  );
+  return <div className="w-4/5 h-4/5 rounded card-back-stripes" />;
 };
