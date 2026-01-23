@@ -21,17 +21,7 @@
 }
 
 .foundation-pile.drop-target {
-  outline: 2px solid rgba(96, 165, 250, 0.6);
-  outline-offset: 4px;
-  border-radius: 10px;
-}
-
-.foundation-pile.drop-target.drop-valid {
-  outline-color: rgba(34, 197, 94, 0.7);
-}
-
-.foundation-pile.drop-target.drop-invalid {
-  outline-color: rgba(239, 68, 68, 0.7);
+  outline: none;
 }
 
 .foundation-empty {

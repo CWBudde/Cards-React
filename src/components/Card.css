@@ -13,21 +13,14 @@
   pointer-events: none;
 }
 
-/* Highlight effect for valid drop targets - matches legacy rgba(255,255,255,0.5) overlay */
-.card.drop-highlight::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: inherit;
-  pointer-events: none;
+/* Highlight effect for valid drop targets - subtle white background only */
+.card.drop-highlight.card-front,
+.card.drop-highlight.card-back {
+  background: #ffffff;
 }
 
 .card-front {
-  background: linear-gradient(180deg, #e1e1e1 0%, #fcfcfc 100%);
+  background: linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%);
   color: black;
   display: flex;
   flex-direction: column;
@@ -44,7 +37,7 @@
 
 /* Legacy style - white/gray gradient background with dark blue ornament */
 .card-back-legacy {
-  background: linear-gradient(180deg, #e1e1e1 0%, #fcfcfc 100%);
+  background: linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%);
 }
 
 /* Modern style - blue gradient background */

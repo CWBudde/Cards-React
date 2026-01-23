@@ -128,8 +128,9 @@ When modifying game behavior, always consult:
 
 ## Common Pitfalls
 
-- **Don't modify legacy/**: Reference only, changes go in src/
+- **Don't ever modify legacy/**: Reference only, changes go in src/
 - **Engine mutations**: Engine functions mutate in place; React layer must clone
 - **Responsive layout**: Card dimensions derive from viewport via `useLayout()`, recalculated on resize
 - **Face-down count**: Always 3 cards face-down per pile in initial deal
 - **Capacity array**: `[3,4,5,6,7,8,9,10]` must sum to 52 cards
+- **Prefer Delphi Code over JavaScript**: The JavaScript implementation is just a transpilation of the high level Delphi code.
