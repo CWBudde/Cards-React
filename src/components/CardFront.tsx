@@ -8,7 +8,6 @@
  */
 
 import type React from "react";
-import { SuitSymbolByIndex } from "./SuitSymbol";
 import { RankSymbolByIndex } from "./RankSymbol";
 import { CardPips } from "./CardPips";
 import { FaceCardCenter } from "./FaceCardCenter";
@@ -41,8 +40,7 @@ export function CardFront({
   const suitColor = SUIT_COLORS[suitName];
 
   // Calculate sizes based on card dimensions
-  const cornerRankSize = Math.max(8, height * 0.1);
-  const cornerSuitSize = Math.max(6, height * 0.08);
+  const cornerRankSize = Math.max(10, height * 0.14);
 
   // Face cards (J=10, Q=11, K=12) have different layout
   const isFaceCard = rank >= 10;
@@ -60,17 +58,14 @@ export function CardFront({
     >
       {/* Top-left corner */}
       <div className="card-corner card-corner-top">
-        <RankSymbolByIndex
-          rankIndex={rank}
-          size={cornerRankSize}
-          color={suitColor}
-          className="card-rank"
-        />
-        <SuitSymbolByIndex
-          suitIndex={suit}
-          size={cornerSuitSize}
-          className="card-suit"
-        />
+        <div className="card-rank-stretch">
+          <RankSymbolByIndex
+            rankIndex={rank}
+            size={cornerRankSize}
+            color={suitColor}
+            className="card-rank"
+          />
+        </div>
       </div>
 
       {/* Card center content */}
@@ -88,19 +83,15 @@ export function CardFront({
 
       {/* Bottom-right corner (rotated) */}
       <div className="card-corner card-corner-bottom">
-        <RankSymbolByIndex
-          rankIndex={rank}
-          size={cornerRankSize}
-          color={suitColor}
-          className="card-rank"
-          flipped
-        />
-        <SuitSymbolByIndex
-          suitIndex={suit}
-          size={cornerSuitSize}
-          className="card-suit"
-          flipped
-        />
+        <div className="card-rank-stretch">
+          <RankSymbolByIndex
+            rankIndex={rank}
+            size={cornerRankSize}
+            color={suitColor}
+            className="card-rank"
+            flipped
+          />
+        </div>
       </div>
     </div>
   );

@@ -106,8 +106,8 @@
 .card-corner {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1px;
+  align-items: flex-start;
+  gap: 0;
 }
 
 .card-corner-top {
@@ -116,12 +116,22 @@
 
 .card-corner-bottom {
   align-self: flex-end;
+  align-items: flex-end;
 }
 
 .card-rank {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.card-rank-stretch {
+  transform: scaleX(1.08);
+  transform-origin: left center;
+}
+
+.card-corner-bottom .card-rank-stretch {
+  transform-origin: right center;
 }
 
 .card-suit {
@@ -141,10 +151,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-@media (prefers-color-scheme: light) {
-  .card-front {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
 }
