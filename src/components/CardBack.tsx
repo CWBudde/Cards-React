@@ -1,8 +1,8 @@
 /**
  * CardBack component - renders the back of a playing card
  * Supports two styles:
- * - "legacy": Decorative ornament pattern from legacy Card.Drawer.pas
- * - "modern": Simple diagonal stripe pattern
+ * - "ornament": Decorative ornament pattern
+ * - "stripes": Simple diagonal stripe pattern
  */
 
 import type React from "react";
@@ -22,18 +22,18 @@ interface CardBackProps {
 export const CardBack = ({
   width,
   height,
-  cardBackStyle = "legacy",
+  cardBackStyle = "ornament",
   className,
   style,
   onPointerDown,
   onDoubleClick,
 }: CardBackProps) => {
   const backClass =
-    cardBackStyle === "legacy" ? "card-back-legacy" : "card-back-modern";
+    cardBackStyle === "ornament" ? "card-back-ornament" : "card-back-stripes";
 
   return (
     <div
-      className={`card card-back ${backClass}${className ? ` ${className}` : ""}`}
+      className={`card card-back ${backClass} relative rounded-[0.3em] bg-white shadow-[1px_1px_4px_rgba(0,0,0,0.5)] select-none cursor-pointer touch-none flex items-center justify-center${className ? ` ${className}` : ""}`}
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -42,13 +42,18 @@ export const CardBack = ({
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
     >
-      {cardBackStyle === "legacy" ? (
-        <div className="card-back-inner">
-          <CardBackOrnament className="card-back-ornament card-back-ornament-top" />
-          <CardBackOrnament className="card-back-ornament card-back-ornament-bottom" />
+      {cardBackStyle === "ornament" ? (
+        <div className="card-back-inner w-[96%] h-[96%] bg-[#001381] border-[1.3px] border-[#888] rounded-[1.3px] relative overflow-hidden">
+          <CardBackOrnament className="card-back-ornament card-back-ornament-top absolute left-1/2 -translate-x-1/2 top-[0%] w-[96%] h-[50%] text-white/50" />
+          <CardBackOrnament className="card-back-ornament card-back-ornament-bottom absolute left-1/2 -translate-x-1/2 bottom-[0%] w-[96%] h-[50%] text-white/50 rotate-180" />
         </div>
       ) : (
-        <div className="card-back-pattern" />
+        <div
+          className="card-back-pattern w-4/5 h-4/5 rounded"
+          style={{
+            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px), repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px)`,
+          }}
+        />
       )}
     </div>
   );

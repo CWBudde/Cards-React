@@ -1,18 +1,4 @@
-.card {
-  position: relative;
-  border-radius: 0.3em;
-  background-color: #fff;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-  user-select: none;
-  cursor: pointer;
-  touch-action: none;
-}
-
-.card.drag-source {
-  opacity: 0;
-  pointer-events: none;
-}
-
+/* CSS custom properties for animatable gradients */
 @property --card-bg-start {
   syntax: "<color>";
   inherits: true;
@@ -25,7 +11,12 @@
   initial-value: #fcfcfc;
 }
 
-/* Highlight effect for valid drop targets - shift gradient to white */
+/* Card styles with CSS custom properties (cannot be done in Tailwind) */
+.card.drag-source {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .card.drop-highlight {
   --card-bg-start: #ffffff;
   --card-bg-end: #ffffff;
@@ -42,36 +33,12 @@
   transition:
     --card-bg-start 200ms linear,
     --card-bg-end 200ms linear;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 7px;
-  box-sizing: border-box;
 }
 
-.card-back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* Card back ornament style - background handled by inner blue rectangle */
 
-/* Legacy style - white/gray gradient background with dark blue ornament */
-.card-back-legacy {
-  --card-bg-start: #e1e1e1;
-  --card-bg-end: #fcfcfc;
-  background: linear-gradient(
-    150deg,
-    var(--card-bg-start) 0%,
-    var(--card-bg-end) 100%
-  );
-  transition:
-    --card-bg-start 80ms ease,
-    --card-bg-end 80ms ease;
-}
-
-/* Modern style - blue gradient background */
-.card-back-modern {
+/* Card back stripes style - blue gradient background */
+.card-back-stripes {
   --card-bg-start: #1e3a8a;
   --card-bg-end: #3b82f6;
   background: linear-gradient(
@@ -82,99 +49,4 @@
   transition:
     --card-bg-start 80ms ease,
     --card-bg-end 80ms ease;
-}
-
-/* Inner rectangle with dark blue background - matches legacy #001381 */
-.card-back-inner {
-  width: 96%;
-  height: 96%;
-  background-color: #001381;
-  border: 1.3px solid #888;
-  border-radius: 1.3px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Ornament styling - semi-transparent white like legacy rgba(255,255,255,0.5) */
-.card-back-ornament {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 88%;
-  height: 48%;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.card-back-ornament-top {
-  top: 4%;
-}
-
-.card-back-ornament-bottom {
-  bottom: 4%;
-  transform: translateX(-50%) rotate(180deg);
-}
-
-/* Modern card back pattern - crosshatch design */
-.card-back-pattern {
-  width: 80%;
-  height: 80%;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 255, 255, 0.1) 10px,
-      rgba(255, 255, 255, 0.1) 20px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 10px,
-      rgba(255, 255, 255, 0.1) 10px,
-      rgba(255, 255, 255, 0.1) 20px
-    );
-  border-radius: 4px;
-}
-
-.card-corner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-}
-
-.card-corner-top {
-  align-self: flex-start;
-}
-
-.card-corner-bottom {
-  align-self: flex-end;
-  align-items: flex-end;
-}
-
-.card-rank {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible;
-}
-
-.card-suit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible;
-}
-
-.card-center {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-suit-large {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

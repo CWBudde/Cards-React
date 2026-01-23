@@ -43,7 +43,7 @@ export function isSolvableSeed(seed: number): boolean {
 }
 const CARD_BACK_STORAGE_KEY = "cards-card-back-style";
 
-export type CardBackStyle = "legacy" | "modern";
+export type CardBackStyle = "ornament" | "stripes";
 
 function readStoredSeed(): number | null {
   if (typeof window === "undefined") {
@@ -76,20 +76,21 @@ function storeSeed(seed: number): void {
 
 export function readStoredCardBackStyle(): CardBackStyle {
   if (typeof window === "undefined") {
-    return "legacy";
+    return "ornament";
   }
 
   try {
     const raw = window.localStorage.getItem(CARD_BACK_STORAGE_KEY);
-    if (raw === "modern" || raw === "legacy") {
+    if (raw === "stripes" || raw === "ornament") {
       return raw;
     }
     // No stored preference - pick randomly
-    const randomStyle: CardBackStyle = Math.random() < 0.5 ? "legacy" : "modern";
+    const randomStyle: CardBackStyle =
+      Math.random() < 0.5 ? "ornament" : "stripes";
     storeCardBackStyle(randomStyle);
     return randomStyle;
   } catch {
-    return "legacy";
+    return "ornament";
   }
 }
 
@@ -145,7 +146,8 @@ function getNextSeed(): number {
 export function useGame(initialSeed?: number) {
   const [gameState, setGameState] = useState<GameState>(() => {
     // Priority: URL param > initialSeed > localStorage > next solvable seed
-    const seed = readSeedFromUrl() ?? initialSeed ?? readStoredSeed() ?? getNextSeed();
+    const seed =
+      readSeedFromUrl() ?? initialSeed ?? readStoredSeed() ?? getNextSeed();
     storeSeed(seed);
     updateUrlWithSeed(seed);
     return newGame(seed);
