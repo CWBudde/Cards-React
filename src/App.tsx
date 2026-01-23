@@ -117,7 +117,13 @@ function App() {
       />
       {dragState ? (
         <div className="drag-layer">
-          <div className="drag-preview" ref={dragPreviewRef}>
+          <div
+            className="drag-preview"
+            ref={dragPreviewRef}
+            style={{
+              transform: `translate(${dragState.position.x}px, ${dragState.position.y}px)`,
+            }}
+          >
             {dragState.stack.map((card, index) => (
               <div
                 key={card.id}

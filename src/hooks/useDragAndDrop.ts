@@ -169,6 +169,7 @@ export function useDragAndDrop({
             source: pending.source,
             stack: pending.stack,
             grabOffset: pending.grabOffset,
+            position: initialPosition,
             target: initialTarget,
             isTargetValid: false,
           };
@@ -222,6 +223,7 @@ export function useDragAndDrop({
 
       const nextState: DragState = {
         ...current,
+        position,
         target,
         isTargetValid,
       };
