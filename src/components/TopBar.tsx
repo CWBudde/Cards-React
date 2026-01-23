@@ -14,7 +14,7 @@ interface TopBarProps {
   onUndo: () => void;
 }
 
-export function TopBar({
+export const TopBar = ({
   seed,
   isSolvable,
   onNew,
@@ -22,7 +22,7 @@ export function TopBar({
   onFinish,
   onSolve,
   onUndo,
-}: TopBarProps) {
+}: TopBarProps) => {
   return (
     <div className="top-bar">
       <div className="seed-display">
@@ -50,4 +50,4 @@ export function TopBar({
       </div>
     </div>
   );
-}
+};

@@ -19,7 +19,7 @@ interface CardBackProps {
   onDoubleClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-export function CardBack({
+export const CardBack = ({
   width,
   height,
   cardBackStyle = "legacy",
@@ -27,7 +27,7 @@ export function CardBack({
   style,
   onPointerDown,
   onDoubleClick,
-}: CardBackProps) {
+}: CardBackProps) => {
   const backClass =
     cardBackStyle === "legacy" ? "card-back-legacy" : "card-back-modern";
 
@@ -52,4 +52,4 @@ export function CardBack({
       )}
     </div>
   );
-}
+};

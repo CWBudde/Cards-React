@@ -21,7 +21,7 @@ interface CardProps {
   onDoubleClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-export function Card({
+export const Card = ({
   card,
   width,
   height,
@@ -31,7 +31,7 @@ export function Card({
   style,
   onPointerDown,
   onDoubleClick,
-}: CardProps) {
+}: CardProps) => {
   const highlightClass = highlight ? " drop-highlight" : "";
 
   if (!card.faceUp) {
@@ -60,4 +60,4 @@ export function Card({
       onDoubleClick={onDoubleClick}
     />
   );
-}
+};

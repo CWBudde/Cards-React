@@ -29,13 +29,13 @@ const RANK_ORDER: RankName[] = [
   "K",
 ];
 
-export function RankSymbol({
+export const RankSymbol = ({
   rank,
   size,
   color,
   className,
   flipped,
-}: RankSymbolProps) {
+}: RankSymbolProps) => {
   const { width, height, path } = RANK_PATHS[rank];
 
   // Scale based on height to maintain consistent text height
@@ -54,7 +54,7 @@ export function RankSymbol({
       <path d={path} fill={color} fillRule="evenodd" />
     </svg>
   );
-}
+};
 
 interface RankSymbolByIndexProps {
   rankIndex: number;
@@ -64,13 +64,13 @@ interface RankSymbolByIndexProps {
   flipped?: boolean;
 }
 
-export function RankSymbolByIndex({
+export const RankSymbolByIndex = ({
   rankIndex,
   size,
   color,
   className,
   flipped,
-}: RankSymbolByIndexProps) {
+}: RankSymbolByIndexProps) => {
   const rank = RANK_ORDER[rankIndex];
   return (
     <RankSymbol
@@ -81,4 +81,4 @@ export function RankSymbolByIndex({
       flipped={flipped}
     />
   );
-}
+};

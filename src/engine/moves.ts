@@ -16,7 +16,7 @@ import type {
 
 /**
  * Get a movable stack from a tableau pile starting at cardIndex
- * Returns null if the stack is not valid (has face-down cards or doesn't alternate colors)
+ * Returns null if the stack is not valid (has face-down cards)
  */
 export function getMovableStack(
   state: GameState,
@@ -37,21 +37,6 @@ export function getMovableStack(
     // All cards in stack must be face-up
     if (!card.faceUp) {
       return null;
-    }
-
-    // If not the first card in stack, check alternating colors and descending rank
-    if (stack.length > 0) {
-      const prevCard = stack[stack.length - 1];
-
-      // Must be opposite colors
-      if (!areOppositeColors(prevCard.suit, card.suit)) {
-        return null;
-      }
-
-      // Must be descending rank (prev.rank - 1 === current.rank)
-      if (prevCard.rank !== card.rank + 1) {
-        return null;
-      }
     }
 
     stack.push(card);

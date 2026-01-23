@@ -120,6 +120,36 @@ describe("Movable stacks", () => {
     }
   });
 
+  it("should allow non-alternating face-up stacks", () => {
+    const game = createEmptyGame(1);
+    const pileIndex = 0;
+
+    const redQueen: Card = {
+      id: 24,
+      suit: 3 as Suit,
+      rank: 11 as Rank,
+      faceUp: true,
+    };
+    const redJack: Card = {
+      id: 23,
+      suit: 3 as Suit,
+      rank: 10 as Rank,
+      faceUp: true,
+    };
+    const blackAce: Card = {
+      id: 0,
+      suit: 0 as Suit,
+      rank: 0 as Rank,
+      faceUp: true,
+    };
+
+    game.tableau[pileIndex] = [redQueen, redJack, blackAce];
+
+    const stack = getMovableStack(game, pileIndex, 0);
+    expect(stack).not.toBeNull();
+    expect(stack!.length).toBe(3);
+  });
+
   it("should return single card stack for top card", () => {
     const game = newGame(12345);
 
