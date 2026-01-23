@@ -49,7 +49,9 @@ export const FoundationPlaceholder = ({ children }: { children: ReactNode }) => 
 export const FoundationCard = ({ children }: { children: ReactNode }) => {
   return (
     <div className="foundation-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      {children}
+      <div className="relative">
+        {children}
+      </div>
     </div>
   );
 };
