@@ -80,17 +80,19 @@ export const Tableau = memo(function Tableau({
               width: `${cardWidth}px`,
             }}
           >
-            {pile.length === 0 ? (
-              <div
-                className="tableau-empty"
-                style={{
-                  width: `${cardWidth}px`,
-                  height: `${cardHeight}px`,
-                }}
-              >
-                <div className="tableau-placeholder">K</div>
-              </div>
-            ) : (
+            {/* Always render the placeholder base */}
+            <div
+              className="tableau-empty"
+              style={{
+                width: `${cardWidth}px`,
+                height: `${cardHeight}px`,
+              }}
+            >
+              <div className="tableau-placeholder">K</div>
+            </div>
+
+            {/* Render cards on top of the placeholder */}
+            {pile.length > 0 && (
               <div className="tableau-stack">
                 {pile.map((card, cardIndex) => {
                   const isTopCard = cardIndex === pile.length - 1;

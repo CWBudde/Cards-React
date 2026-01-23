@@ -33,11 +33,11 @@ const COLORS = [
   "#f472b6",
 ];
 
-export function Confetti({
+export const Confetti = ({
   active,
   durationMs = 3200,
   onComplete,
-}: ConfettiProps) {
+}: ConfettiProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
@@ -144,4 +144,4 @@ export function Confetti({
   }
 
   return <canvas ref={canvasRef} className="confetti-canvas" />;
-}
+};

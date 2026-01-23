@@ -14,13 +14,13 @@ interface FaceCardCenterProps {
   color: string;
 }
 
-export function FaceCardCenter({
+export const FaceCardCenter = ({
   rank,
   suit,
   width,
   height,
   color,
-}: FaceCardCenterProps) {
+}: FaceCardCenterProps) => {
   const boxWidth = width * 0.8;
   const boxHeight = height * 0.6;
   const boxLeft = width * 0.1;
@@ -69,4 +69,4 @@ export function FaceCardCenter({
       </div>
     </div>
   );
-}
+};

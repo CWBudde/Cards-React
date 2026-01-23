@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Modern reimplementation of a legacy Cards solitaire game using Vite + React + TypeScript. This is a **variant** of standard solitaire with 8 tableau piles (instead of 7), variable initial capacities [3-10], and no stock/waste pile - all 52 cards are dealt at game start.
+Modern reimplementation of a legacy Cards solitaire game (see ./legacy/) using Vite + React + TypeScript. This is a **variant** of standard solitaire with 8 tableau piles (instead of 7), variable initial capacities [3-10], and no stock/waste pile - all 52 cards are dealt at game start.
 
 ## Repository Structure
 
@@ -31,11 +31,13 @@ yarn format:check
 ### Game Engine (src/engine/)
 
 The core game logic is a **pure, deterministic TypeScript engine** with no React dependencies. This architecture enables:
+
 - Unit testing without UI concerns
 - Deterministic behavior per seed
 - Clear separation of game logic from presentation
 
 **Key files:**
+
 - `types.ts`: Core data structures (GameState, Card, Move types)
 - `rng.ts`: Mulberry32 PRNG (deterministic per seed, NOT legacy RNG parity)
 - `deal.ts`: Initial card dealing with tableau capacities [3,4,5,6,7,8,9,10] and 3 face-down cards per pile
@@ -45,6 +47,7 @@ The core game logic is a **pure, deterministic TypeScript engine** with no React
 - `engine.test.ts`: Vitest unit tests
 
 **Engine behavior:**
+
 - Functions mutate `GameState` in place (React layer clones for immutability)
 - Auto-flip: when a face-down card becomes the top card, it flips automatically after any move
 - Tableau moves require alternating colors (Black: Spade/Club, Red: Heart/Diamond) and descending rank
@@ -54,10 +57,12 @@ The core game logic is a **pure, deterministic TypeScript engine** with no React
 ### React UI Layer (src/)
 
 **State management:**
+
 - `hooks/useGame.ts`: Manages GameState, wraps engine mutations with `structuredClone()`, handles localStorage persistence of seed (`cards-last-seed`)
 - `hooks/useLayout.ts`: Computes responsive card dimensions, overlap spacing, and positions based on viewport size
 
 **Components:**
+
 - `App.tsx`: Root component, owns pointer drag/drop logic, keyboard shortcuts (`n/r/f/s/u`), and win/confetti triggering
 - `components/Card.tsx`: Individual card rendering
 - `components/Tableau.tsx`: 8 tableau piles with dynamic overlap calculation
@@ -68,6 +73,7 @@ The core game logic is a **pure, deterministic TypeScript engine** with no React
 ### Drag & Drop Architecture
 
 Implemented in `App.tsx` using Pointer Events API:
+
 1. `pointerdown`: Identify clicked card, compute movable stack
 2. `pointermove`: Render dragging preview, compute valid drop targets
 3. `pointerup`: Validate drop with engine rules, apply move or animate return
@@ -76,18 +82,21 @@ Implemented in `App.tsx` using Pointer Events API:
 ## Important Project Conventions
 
 ### Game Rules
+
 - **Tableau to Tableau**: Moving stack must be contiguous, all face-up, alternating colors, descending rank. Empty piles accept Kings only.
 - **Tableau to Foundation**: Only top card can move. Aces start foundations, then same-suit ascending by 1.
 - **Auto-flip**: Newly exposed tableau top cards flip automatically after moves.
 - **Undo**: Single-step only (matches legacy behavior).
 
 ### RNG & Determinism
+
 - **No legacy RNG parity**: Uses Mulberry32 instead of Alea for simplicity
 - **Deterministic per seed**: Same seed always produces same deal
 - **Seed generation**: `Date.now()` for new games
 - **Seed persistence**: Stored in localStorage as `cards-last-seed`
 
 ### Keyboard Shortcuts
+
 - `n`: New game (new seed)
 - `r`: Retry (restart same seed)
 - `f`: Finish (auto-move safe cards to foundations)
@@ -95,6 +104,7 @@ Implemented in `App.tsx` using Pointer Events API:
 - `u`: Undo last move
 
 ### Accessibility
+
 - Reduced motion setting stored as `cards-reduced-motion` in localStorage
 - Respects system preference via `prefers-reduced-motion`
 
@@ -108,17 +118,10 @@ Implemented in `App.tsx` using Pointer Events API:
 
 **No golden seed tests:** Project explicitly chose NOT to require exact legacy RNG parity, focusing instead on correct rule implementation.
 
-## Deployment
-
-GitHub Pages workflow in `.github/workflows/deploy-pages.yml`:
-- Triggers on push to `main` branch
-- Builds production bundle
-- Deploys `dist/` to GitHub Pages
-- **Important**: For subpath deployments, set Vite `base` in `vite.config.ts`
-
 ## Key Reference Documents
 
 When modifying game behavior, always consult:
+
 1. **GAME_SPEC.md**: Authoritative rules specification (dealing, moves, helpers)
 2. **PLAN.md**: Implementation milestones and what's completed/remaining
 3. **Engine tests**: `src/engine/engine.test.ts` for expected behavior

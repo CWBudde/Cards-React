@@ -16,14 +16,14 @@ interface SuitSymbolProps {
 
 const SUIT_ORDER: SuitName[] = ["spade", "heart", "club", "diamond"];
 
-export function SuitSymbol({
+export const SuitSymbol = ({
   suit,
   size,
   color: overrideColor,
   fit,
   className,
   flipped,
-}: SuitSymbolProps) {
+}: SuitSymbolProps) => {
   const { width, height, path } = SUIT_PATHS[suit];
   const color = overrideColor ?? SUIT_COLORS[suit];
 
@@ -43,7 +43,7 @@ export function SuitSymbol({
       <path d={path} fill={color} />
     </svg>
   );
-}
+};
 
 interface SuitSymbolByIndexProps {
   suitIndex: number;
@@ -54,14 +54,14 @@ interface SuitSymbolByIndexProps {
   flipped?: boolean;
 }
 
-export function SuitSymbolByIndex({
+export const SuitSymbolByIndex = ({
   suitIndex,
   size,
   color,
   fit,
   className,
   flipped,
-}: SuitSymbolByIndexProps) {
+}: SuitSymbolByIndexProps) => {
   const suit = SUIT_ORDER[suitIndex];
   return (
     <SuitSymbol
@@ -73,4 +73,4 @@ export function SuitSymbolByIndex({
       flipped={flipped}
     />
   );
-}
+};

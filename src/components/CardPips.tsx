@@ -120,7 +120,7 @@ const PIP_LAYOUTS: Record<number, PipPosition[]> = {
   ],
 };
 
-export function CardPips({ rank, suit, width, height }: CardPipsProps) {
+export const CardPips = ({ rank, suit, width, height }: CardPipsProps) => {
   // Calculate pip area dimensions (matches legacy: w = 0.8 * width, h = 0.6 * height)
   const pipAreaWidth = width * 0.8;
   const pipAreaHeight = height * 0.6;
@@ -167,4 +167,4 @@ export function CardPips({ rank, suit, width, height }: CardPipsProps) {
       ))}
     </div>
   );
-}
+};

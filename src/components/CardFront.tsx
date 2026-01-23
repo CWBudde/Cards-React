@@ -26,7 +26,7 @@ interface CardFrontProps {
 
 const SUIT_NAMES = ["spade", "heart", "club", "diamond"] as const;
 
-export function CardFront({
+export const CardFront = ({
   rank,
   suit,
   width,
@@ -35,7 +35,7 @@ export function CardFront({
   style,
   onPointerDown,
   onDoubleClick,
-}: CardFrontProps) {
+}: CardFrontProps) => {
   const suitName = SUIT_NAMES[suit];
   const suitColor = SUIT_COLORS[suitName];
 
@@ -95,4 +95,4 @@ export function CardFront({
       </div>
     </div>
   );
-}
+};
