@@ -12,16 +12,12 @@ import {
 } from "./helpers";
 import { createEmptyGame, newGame } from "./deal";
 import { MoveType } from "./types";
-import type { Card, Suit, Rank, GameState } from "./types";
+import type { Card, Suit, Rank } from "./types";
 
 /**
  * Helper to create a card for testing
  */
-function makeCard(
-  suit: Suit,
-  rank: Rank,
-  faceUp: boolean = true
-): Card {
+function makeCard(suit: Suit, rank: Rank, faceUp: boolean = true): Card {
   return {
     id: suit * 13 + rank,
     suit,
@@ -345,7 +341,10 @@ describe("Integration: solver and finish", () => {
 
     // Should move all 8 cards to foundation
     expect(movesApplied).toBe(8);
-    const totalFoundation = game.foundations.reduce((sum, f) => sum + f.length, 0);
+    const totalFoundation = game.foundations.reduce(
+      (sum, f) => sum + f.length,
+      0
+    );
     expect(totalFoundation).toBe(8);
   });
 
@@ -382,7 +381,10 @@ describe("Integration: solver and finish", () => {
     const kingMoves = runFinish(game);
     expect(kingMoves).toBe(4);
 
-    const totalFoundation = game.foundations.reduce((sum, f) => sum + f.length, 0);
+    const totalFoundation = game.foundations.reduce(
+      (sum, f) => sum + f.length,
+      0
+    );
     expect(totalFoundation).toBe(52);
   });
 });
