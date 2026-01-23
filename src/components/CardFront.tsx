@@ -49,22 +49,23 @@ export const CardFront = ({
 
   return (
     <div
-      className={`card card-front card-${suitName}${className ? ` ${className}` : ""}`}
+      className={`card card-front card-${suitName} relative rounded-[0.3em] shadow-[1px_1px_4px_rgba(0,0,0,0.5)] select-none cursor-pointer touch-none text-black flex flex-col justify-between box-border${className ? ` ${className}` : ""}`}
       style={{
         width: `${width}px`,
         height: `${height}px`,
+        padding: '7px',
         ...style,
       }}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}
     >
       {/* Top-left corner */}
-      <div className="card-corner card-corner-top">
+      <div className="card-corner card-corner-top flex flex-col items-start gap-0 self-start">
         <RankSymbolByIndex
           rankIndex={rank}
           size={cornerRankSize}
           color={suitColor}
-          className="card-rank"
+          className="card-rank flex items-center justify-center overflow-visible"
         />
       </div>
 
@@ -82,13 +83,13 @@ export const CardFront = ({
       )}
 
       {/* Bottom-right corner (rotated) */}
-      <div className="card-corner card-corner-bottom">
+      <div className="card-corner card-corner-bottom flex flex-col items-end gap-0 self-end">
         <div className="card-rank-stretch">
           <RankSymbolByIndex
             rankIndex={rank}
             size={cornerRankSize}
             color={suitColor}
-            className="card-rank"
+            className="card-rank flex items-center justify-center overflow-visible"
             flipped
           />
         </div>

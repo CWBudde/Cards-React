@@ -25,7 +25,7 @@ export const Card = ({
   card,
   width,
   height,
-  cardBackStyle = "legacy",
+  cardBackStyle = "ornament",
   highlight,
   className,
   style,
@@ -40,7 +40,11 @@ export const Card = ({
         width={width}
         height={height}
         cardBackStyle={cardBackStyle}
-        className={className ? className + highlightClass : highlightClass.trim() || undefined}
+        className={
+          className
+            ? className + highlightClass
+            : highlightClass.trim() || undefined
+        }
         style={style}
         onPointerDown={onPointerDown}
         onDoubleClick={onDoubleClick}
@@ -54,7 +58,11 @@ export const Card = ({
       suit={card.suit}
       width={width}
       height={height}
-      className={className ? className + highlightClass : highlightClass.trim() || undefined}
+      className={
+        className
+          ? className + highlightClass
+          : highlightClass.trim() || undefined
+      }
       style={style}
       onPointerDown={onPointerDown}
       onDoubleClick={onDoubleClick}

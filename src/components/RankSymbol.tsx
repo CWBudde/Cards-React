@@ -74,6 +74,7 @@ interface RankSymbolByIndexProps {
   color: string;
   className?: string;
   flipped?: boolean;
+  disableStretch?: boolean;
 }
 
 export const RankSymbolByIndex = ({
@@ -82,13 +83,14 @@ export const RankSymbolByIndex = ({
   color,
   className,
   flipped,
+  disableStretch = false,
 }: RankSymbolByIndexProps) => {
   const rank = RANK_ORDER[rankIndex];
 
   // Cards 2-9 (rank indices 1-8) get horizontal stretch like legacy
   // NOT Ace (0), 10 (9), J (10), Q (11), K (12)
   // Only apply in corner positions (not in center of face cards)
-  const shouldStretch = rankIndex >= 1 && rankIndex <= 8;
+  const shouldStretch = !disableStretch && rankIndex >= 1 && rankIndex <= 8;
 
   return (
     <RankSymbol
