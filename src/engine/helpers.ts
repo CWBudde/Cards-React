@@ -54,19 +54,52 @@ export function getAutoMovesToFoundation(
  */
 export function runFinish(state: GameState, maxIterations = 200): number {
   let movesApplied = 0;
+  const previousLastMove = state.lastMove;
+  const previousHistoryLength = state.moveHistory.length;
 
   for (let i = 0; i < maxIterations; i++) {
-    const autoMoves = getAutoMovesToFoundation(state);
-    if (autoMoves.length === 0) {
+    let moveApplied = false;
+
+    for (let pileIndex = 0; pileIndex < state.tableau.length; pileIndex++) {
+      const pile = state.tableau[pileIndex];
+      if (pile.length === 0) {
+        continue;
+      }
+
+      const topCard = pile[pile.length - 1];
+
+      // Legacy: flip the top card if face-down before considering foundation.
+      if (!topCard.faceUp) {
+        topCard.faceUp = true;
+      }
+
+      const foundationIndex = topCard.suit;
+      if (!canDropOnFoundation(topCard, state.foundations[foundationIndex])) {
+        continue;
+      }
+
+      const move: TableauToFoundationMove = {
+        type: MoveType.TableauToFoundation,
+        fromPile: pileIndex,
+        toFoundation: foundationIndex,
+      };
+
+      if (!applyMove(state, move)) {
+        continue;
+      }
+
+      // Legacy finish does not affect undo history.
+      state.lastMove = previousLastMove;
+      state.moveHistory.length = previousHistoryLength;
+
+      moveApplied = true;
+      movesApplied += 1;
       break;
     }
 
-    const move = autoMoves[0];
-    if (!applyMove(state, move)) {
+    if (!moveApplied) {
       break;
     }
-
-    movesApplied += 1;
   }
 
   return movesApplied;

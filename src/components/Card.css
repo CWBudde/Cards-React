@@ -13,22 +13,62 @@
 }
 
 .card-front {
-  background: white;
+  background: linear-gradient(180deg, #e1e1e1 0%, #fcfcfc 100%);
   color: black;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 8px;
+  padding: 4%;
   box-sizing: border-box;
 }
 
 .card-back {
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Legacy style - white/gray gradient background with dark blue ornament */
+.card-back-legacy {
+  background: linear-gradient(180deg, #e1e1e1 0%, #fcfcfc 100%);
+}
+
+/* Modern style - blue gradient background */
+.card-back-modern {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+/* Inner rectangle with dark blue background - matches legacy #001381 */
+.card-back-inner {
+  width: 96%;
+  height: 96%;
+  background-color: #001381;
+  border: 1.3px solid #888;
+  border-radius: 1.3px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ornament styling - semi-transparent white like legacy rgba(255,255,255,0.5) */
+.card-back-ornament {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88%;
+  height: 48%;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.card-back-ornament-top {
+  top: 4%;
+}
+
+.card-back-ornament-bottom {
+  bottom: 4%;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+/* Modern card back pattern - crosshatch design */
 .card-back-pattern {
   width: 80%;
   height: 80%;
@@ -54,7 +94,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: 1;
+  gap: 1px;
 }
 
 .card-corner-top {
@@ -63,16 +103,18 @@
 
 .card-corner-bottom {
   align-self: flex-end;
-  transform: rotate(180deg);
 }
 
 .card-rank {
-  font-size: 1.2em;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-suit {
-  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-center {
@@ -83,17 +125,9 @@
 }
 
 .card-suit-large {
-  font-size: 3em;
-}
-
-.card-spade,
-.card-club {
-  color: black;
-}
-
-.card-heart,
-.card-diamond {
-  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (prefers-color-scheme: light) {

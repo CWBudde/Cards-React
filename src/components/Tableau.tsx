@@ -5,6 +5,7 @@
 import type React from "react";
 import { memo } from "react";
 import type { Pile } from "../engine";
+import type { CardBackStyle } from "../hooks/useGame";
 import { Card } from "./Card";
 import { calculatePileOverlap } from "../hooks/useLayout";
 import "./Tableau.css";
@@ -13,6 +14,7 @@ interface TableauProps {
   tableau: [Pile, Pile, Pile, Pile, Pile, Pile, Pile, Pile];
   cardWidth: number;
   cardHeight: number;
+  cardBackStyle?: CardBackStyle;
   overlapDistance: number;
   spacing: number;
   tableauTopOffset: number;
@@ -30,6 +32,7 @@ export const Tableau = memo(function Tableau({
   tableau,
   cardWidth,
   cardHeight,
+  cardBackStyle,
   overlapDistance,
   spacing,
   tableauTopOffset,
@@ -101,6 +104,7 @@ export const Tableau = memo(function Tableau({
                       card={card}
                       width={cardWidth}
                       height={cardHeight}
+                      cardBackStyle={cardBackStyle}
                       onPointerDown={
                         onCardPointerDown
                           ? (event) =>

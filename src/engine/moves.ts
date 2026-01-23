@@ -148,9 +148,6 @@ function applyTableauToTableau(
   const cardsToMove = sourcePile.splice(move.cardIndex);
   targetPile.push(...cardsToMove);
 
-  // Auto-flip exposed card
-  autoFlipTopCard(state, move.fromPile);
-
   // Record move
   state.lastMove = move;
   state.moveHistory.push(move);
@@ -182,9 +179,6 @@ function applyTableauToFoundation(
   // Apply move
   const movedCard = sourcePile.pop()!;
   foundationPile.push(movedCard);
-
-  // Auto-flip exposed card
-  autoFlipTopCard(state, move.fromPile);
 
   // Record move
   state.lastMove = move;
@@ -248,24 +242,6 @@ function applyFlip(state: GameState, move: FlipMove): boolean {
   state.moveHistory.push(move);
 
   return true;
-}
-
-/**
- * Auto-flip the top card of a tableau pile if it's face-down
- */
-function autoFlipTopCard(state: GameState, pileIndex: number): void {
-  const pile = state.tableau[pileIndex];
-
-  if (pile.length > 0) {
-    const topCard = pile[pile.length - 1];
-    if (!topCard.faceUp) {
-      // Apply flip move
-      applyFlip(state, {
-        type: MoveType.Flip,
-        pile: pileIndex,
-      });
-    }
-  }
 }
 
 /**
