@@ -13,7 +13,11 @@ import {
   DRAG_THRESHOLD_PX,
   HOVER_HIGHLIGHT_DELAY_MS,
 } from "../types/drag";
-import { areTargetsEqual, getDropTargetFromPoint } from "../utils/drag";
+import {
+  areTargetsEqual,
+  getDropTargetFromPoint,
+  getDropTargetFromRect,
+} from "../utils/drag";
 import {
   MoveType,
   canDropOnFoundation,
@@ -143,6 +147,15 @@ export function useDragAndDrop({
 
   const updateDragPosition = useCallback(
     (event: PointerEvent) => {
+      const getDragCardRect = () => {
+        const preview = dragPreviewRef.current;
+        if (!preview) {
+          return null;
+        }
+        const cardEl = preview.querySelector<HTMLElement>(".drag-card .card");
+        return cardEl ? cardEl.getBoundingClientRect() : null;
+      };
+
       const pending = pendingDragRef.current;
       if (pending && pending.pointerId === event.pointerId) {
         const deltaX = event.clientX - pending.startX;
@@ -150,9 +163,9 @@ export function useDragAndDrop({
         const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
         if (distance >= DRAG_THRESHOLD_PX) {
-          const initialTarget = getDropTargetFromPoint(
-            event.clientX,
-            event.clientY
+          const targetElement = pending.captureElement;
+          const initialTarget = getDropTargetFromRect(
+            targetElement.getBoundingClientRect()
           );
           const initialPosition = {
             x: event.clientX - pending.grabOffset.x,
@@ -199,7 +212,10 @@ export function useDragAndDrop({
       dragPositionRef.current = position;
       updateDragPreviewPosition(position.x, position.y);
 
-      const target = getDropTargetFromPoint(event.clientX, event.clientY);
+      const dragRect = getDragCardRect();
+      const target = dragRect
+        ? getDropTargetFromRect(dragRect)
+        : getDropTargetFromPoint(event.clientX, event.clientY);
       const isTargetValid = isValidDropTarget(gameState, current, target);
 
       scheduleHoverHighlight(target, isTargetValid);
