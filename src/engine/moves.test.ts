@@ -238,9 +238,9 @@ describe("moves", () => {
     it("should move stack of cards between tableau piles", () => {
       const state = createTestState();
       state.tableau[0] = [
-        createCard(0, 7),  // 8 of Spades
-        createCard(1, 6),  // 7 of Hearts
-        createCard(2, 5),  // 6 of Clubs
+        createCard(0, 7), // 8 of Spades
+        createCard(1, 6), // 7 of Hearts
+        createCard(2, 5), // 6 of Clubs
       ];
       state.tableau[1] = [createCard(3, 8)]; // 9 of Diamonds
 
@@ -260,8 +260,8 @@ describe("moves", () => {
     it("should auto-flip top card after moving cards", () => {
       const state = createTestState();
       state.tableau[0] = [
-        createCard(0, 7, false),  // 8 of Spades (face-down)
-        createCard(1, 6, true),   // 7 of Hearts (face-up)
+        createCard(0, 7, false), // 8 of Spades (face-down)
+        createCard(1, 6, true), // 7 of Hearts (face-up)
       ];
       state.tableau[1] = [createCard(2, 7)]; // 8 of Clubs (for alternating color)
 
@@ -371,7 +371,7 @@ describe("moves", () => {
       const state = createTestState();
       state.tableau[0] = [
         createCard(0, 2, false), // face-down
-        createCard(0, 1, true),  // 2 of Spades
+        createCard(0, 1, true), // 2 of Spades
       ];
       state.foundations[0] = [createCard(0, 0)]; // Ace of Spades
 
@@ -574,11 +574,7 @@ describe("moves", () => {
 
     it("should undo stack move", () => {
       const state = createTestState();
-      state.tableau[0] = [
-        createCard(0, 7),
-        createCard(1, 6),
-        createCard(2, 5),
-      ];
+      state.tableau[0] = [createCard(0, 7), createCard(1, 6), createCard(2, 5)];
       state.tableau[1] = [createCard(3, 8)];
 
       const move: TableauToTableauMove = {
