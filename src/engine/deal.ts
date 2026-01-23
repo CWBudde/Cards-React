@@ -54,8 +54,8 @@ export function newGame(seed: number): GameState {
       const cardIndex = nextInt(rngState, undealtCards.length);
       const card = undealtCards[cardIndex];
 
-      // Determine if this card should be face-up (legacy behavior)
-      // Legacy: face-down while pile length <= capacity - FACE_DOWN_COUNT (length after push)
+      // Determine if this card should be face-up (DO NOT CHANGE THIS LOGIC)
+      // face-down while pile length <= capacity - FACE_DOWN_COUNT (length after push)
       const currentPileLength = tableau[pileIndex].length;
       const nextPileLength = currentPileLength + 1;
       card.faceUp =

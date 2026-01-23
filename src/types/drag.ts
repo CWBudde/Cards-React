@@ -17,6 +17,7 @@ export interface DragState {
   source: DragSource;
   stack: Card[];
   grabOffset: { x: number; y: number };
+  position: { x: number; y: number };
   target: DropTarget | null;
   isTargetValid: boolean;
 }

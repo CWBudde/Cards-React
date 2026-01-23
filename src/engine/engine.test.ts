@@ -71,6 +71,14 @@ describe("Dealing", () => {
     for (let i = 0; i < 8; i++) {
       const pile = game.tableau[i];
       const faceDownCount = pile.filter((card) => !card.faceUp).length;
+      const capacity = TABLEAU_CAPACITIES[i];
+
+      // Debug output
+      console.log(`Pile ${i}: capacity=${capacity}, total=${pile.length}, faceDown=${faceDownCount}`);
+      pile.slice(0, 5).forEach((card, idx) => {
+        console.log(`  [${idx}] id=${card.id}, faceUp=${card.faceUp}`);
+      });
+
       expect(faceDownCount).toBe(FACE_DOWN_COUNT);
     }
   });
