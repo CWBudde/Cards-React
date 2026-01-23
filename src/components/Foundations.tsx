@@ -67,6 +67,7 @@ export const Foundations = memo(function Foundations({
                 width={cardWidth}
                 height={cardHeight}
                 cardBackStyle={cardBackStyle}
+                highlight={isTarget && isDropTargetValid}
                 onPointerDown={
                   onCardPointerDown
                     ? (event) => onCardPointerDown(event, index)

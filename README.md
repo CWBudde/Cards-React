@@ -23,6 +23,8 @@ From the repo root:
 
 A workflow is provided in .github/workflows/deploy-pages.yml. On push to main, it builds cards-web and deploys dist to GitHub Pages.
 
+The autodeployed code can be viewed at https://meko-christian.github.io/Cards/.
+
 If your Pages site is served from a subpath (default for project pages), set Vite base to /<repo>/ in cards-web/vite.config.ts.
 
 ## Notes
