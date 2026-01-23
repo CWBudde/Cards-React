@@ -4,7 +4,7 @@
 
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useGame } from "./hooks/useGame";
+import { useGame, readStoredCardBackStyle } from "./hooks/useGame";
 import { useLayout } from "./hooks/useLayout";
 import { TopBar } from "./components/TopBar";
 import { Foundations } from "./components/Foundations";
@@ -79,6 +79,7 @@ function App() {
     performSolve,
   } = useGame();
   const layout = useLayout();
+  const [cardBackStyle] = useState(() => readStoredCardBackStyle());
   const [dragState, setDragState] = useState<DragState | null>(null);
   const [confettiActive, setConfettiActive] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() =>
@@ -591,7 +592,7 @@ function App() {
     <div className={`app${reducedMotion ? " reduced-motion" : ""}`}>
       <TopBar
         seed={gameState.seed}
-        onNew={startNewGame}
+        onNew={() => startNewGame()}
         onRetry={retryGame}
         onFinish={handleFinish}
         onSolve={handleSolve}
@@ -615,6 +616,7 @@ function App() {
         tableau={gameState.tableau}
         cardWidth={layout.cardWidth}
         cardHeight={layout.cardHeight}
+        cardBackStyle={cardBackStyle}
         overlapDistance={layout.tableauOverlap}
         spacing={layout.foundationSpacing}
         tableauTopOffset={layout.tableauTopOffset}

@@ -1,0 +1,54 @@
+/**
+ * SuitSymbol component - renders a suit symbol using vector paths
+ * Ported from legacy Card.Drawer.pas
+ */
+
+import { SUIT_PATHS, SUIT_COLORS, type SuitName } from "./CardDrawers";
+
+interface SuitSymbolProps {
+  suit: SuitName;
+  size: number;
+  className?: string;
+  flipped?: boolean;
+}
+
+const SUIT_ORDER: SuitName[] = ["spade", "heart", "club", "diamond"];
+
+export function SuitSymbol({ suit, size, className, flipped }: SuitSymbolProps) {
+  const { width, height, path } = SUIT_PATHS[suit];
+  const color = SUIT_COLORS[suit];
+
+  // Scale to fit the requested size while maintaining aspect ratio
+  const scale = size / Math.max(width, height);
+  const scaledWidth = width * scale;
+  const scaledHeight = height * scale;
+
+  return (
+    <svg
+      width={scaledWidth}
+      height={scaledHeight}
+      viewBox={`0 0 ${width} ${height}`}
+      className={className}
+      style={flipped ? { transform: "rotate(180deg)" } : undefined}
+    >
+      <path d={path} fill={color} />
+    </svg>
+  );
+}
+
+interface SuitSymbolByIndexProps {
+  suitIndex: number;
+  size: number;
+  className?: string;
+  flipped?: boolean;
+}
+
+export function SuitSymbolByIndex({
+  suitIndex,
+  size,
+  className,
+  flipped,
+}: SuitSymbolByIndexProps) {
+  const suit = SUIT_ORDER[suitIndex];
+  return <SuitSymbol suit={suit} size={size} className={className} flipped={flipped} />;
+}

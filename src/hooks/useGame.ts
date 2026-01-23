@@ -7,6 +7,9 @@ import { newGame, applyMove, runFinish, runSolve, undo } from "../engine";
 import type { GameState, Move } from "../engine";
 
 const SEED_STORAGE_KEY = "cards-last-seed";
+const CARD_BACK_STORAGE_KEY = "cards-card-back-style";
+
+export type CardBackStyle = "legacy" | "modern";
 
 function readStoredSeed(): number | null {
   if (typeof window === "undefined") {
@@ -29,6 +32,37 @@ function storeSeed(seed: number): void {
 
   try {
     window.localStorage.setItem(SEED_STORAGE_KEY, String(seed));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+export function readStoredCardBackStyle(): CardBackStyle {
+  if (typeof window === "undefined") {
+    return "legacy";
+  }
+
+  try {
+    const raw = window.localStorage.getItem(CARD_BACK_STORAGE_KEY);
+    if (raw === "modern" || raw === "legacy") {
+      return raw;
+    }
+    // No stored preference - pick randomly
+    const randomStyle: CardBackStyle = Math.random() < 0.5 ? "legacy" : "modern";
+    storeCardBackStyle(randomStyle);
+    return randomStyle;
+  } catch {
+    return "legacy";
+  }
+}
+
+export function storeCardBackStyle(style: CardBackStyle): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(CARD_BACK_STORAGE_KEY, style);
   } catch {
     // Ignore storage errors
   }
