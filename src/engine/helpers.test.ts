@@ -346,8 +346,8 @@ describe("getSolveMove", () => {
     expect(move!.type).toBe(MoveType.TableauToTableau);
     if (move!.type === MoveType.TableauToTableau) {
       // Solver should move Queen onto King
-      expect(move.fromPile).toBe(0);
-      expect(move.toPile).toBe(1);
+      expect(move!.fromPile).toBe(0);
+      expect(move!.toPile).toBe(1);
     }
   });
 
@@ -392,8 +392,8 @@ describe("getSolveMove", () => {
     expect(move!.type).toBe(MoveType.TableauToTableau);
     if (move!.type === MoveType.TableauToTableau) {
       // Should prioritize Queen from pile 0 to King (reveals face-down)
-      expect(move.fromPile).toBe(0);
-      expect(move.cardIndex).toBe(1);
+      expect(move!.fromPile).toBe(0);
+      expect(move!.cardIndex).toBe(1);
     }
   });
 
