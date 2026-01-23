@@ -131,7 +131,7 @@ export const CardPips = ({ rank, suit, width, height }: CardPipsProps) => {
   // Ace gets a large pip, others get small pips
   const isAce = rank === 0;
   const pipSize = isAce
-    ? Math.min(pipAreaWidth, pipAreaHeight) * 0.6
+    ? Math.min(pipAreaWidth, pipAreaHeight) * 0.5
     : Math.min(pipAreaWidth, pipAreaHeight) * 0.25;
 
   const layout = PIP_LAYOUTS[rank];
