@@ -2,9 +2,10 @@
  * Game state management hook
  */
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { newGame, applyMove, runFinish, runSolve, undo } from "../engine";
 import type { GameState, Move } from "../engine";
+import { readSeedFromUrl, updateUrlWithSeed } from "../utils/urlParams";
 
 const SEED_STORAGE_KEY = "cards-last-seed";
 const SEED_INDEX_STORAGE_KEY = "SeedIndex";
@@ -143,19 +144,28 @@ function getNextSeed(): number {
 
 export function useGame(initialSeed?: number) {
   const [gameState, setGameState] = useState<GameState>(() => {
-    const seed = initialSeed ?? readStoredSeed() ?? getNextSeed();
+    // Priority: URL param > initialSeed > localStorage > next solvable seed
+    const seed = readSeedFromUrl() ?? initialSeed ?? readStoredSeed() ?? getNextSeed();
     storeSeed(seed);
+    updateUrlWithSeed(seed);
     return newGame(seed);
   });
+
+  // Sync URL parameter whenever seed changes
+  useEffect(() => {
+    updateUrlWithSeed(gameState.seed);
+  }, [gameState.seed]);
 
   const startNewGame = useCallback((seed?: number) => {
     const nextSeed = seed ?? getNextSeed();
     storeSeed(nextSeed);
+    updateUrlWithSeed(nextSeed);
     setGameState(newGame(nextSeed));
   }, []);
 
   const retryGame = useCallback(() => {
     storeSeed(gameState.seed);
+    updateUrlWithSeed(gameState.seed);
     setGameState(newGame(gameState.seed));
   }, [gameState.seed]);
 

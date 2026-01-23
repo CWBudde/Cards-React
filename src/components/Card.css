@@ -13,14 +13,35 @@
   pointer-events: none;
 }
 
-/* Highlight effect for valid drop targets - subtle white background only */
-.card.drop-highlight.card-front,
-.card.drop-highlight.card-back {
-  background: #ffffff;
+@property --card-bg-start {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #e1e1e1;
+}
+
+@property --card-bg-end {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fcfcfc;
+}
+
+/* Highlight effect for valid drop targets - shift gradient to white */
+.card.drop-highlight {
+  --card-bg-start: #ffffff;
+  --card-bg-end: #ffffff;
 }
 
 .card-front {
-  background: linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%);
+  --card-bg-start: #e1e1e1;
+  --card-bg-end: #fcfcfc;
+  background: linear-gradient(
+    150deg,
+    var(--card-bg-start) 0%,
+    var(--card-bg-end) 100%
+  );
+  transition:
+    --card-bg-start 200ms linear,
+    --card-bg-end 200ms linear;
   color: black;
   display: flex;
   flex-direction: column;
@@ -37,12 +58,30 @@
 
 /* Legacy style - white/gray gradient background with dark blue ornament */
 .card-back-legacy {
-  background: linear-gradient(150deg, #e1e1e1 0%, #fcfcfc 100%);
+  --card-bg-start: #e1e1e1;
+  --card-bg-end: #fcfcfc;
+  background: linear-gradient(
+    150deg,
+    var(--card-bg-start) 0%,
+    var(--card-bg-end) 100%
+  );
+  transition:
+    --card-bg-start 80ms ease,
+    --card-bg-end 80ms ease;
 }
 
 /* Modern style - blue gradient background */
 .card-back-modern {
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  --card-bg-start: #1e3a8a;
+  --card-bg-end: #3b82f6;
+  background: linear-gradient(
+    135deg,
+    var(--card-bg-start) 0%,
+    var(--card-bg-end) 100%
+  );
+  transition:
+    --card-bg-start 80ms ease,
+    --card-bg-end 80ms ease;
 }
 
 /* Inner rectangle with dark blue background - matches legacy #001381 */

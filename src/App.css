@@ -37,3 +37,7 @@
 .app.reduced-motion button {
   transition: none;
 }
+
+.app.reduced-motion .card {
+  transition: none;
+}
