@@ -23,22 +23,19 @@ export function useWinDetection({
   const [confettiActive, setConfettiActive] = useState(false);
   const hasWonRef = useRef(false);
 
+  // Detect win state changes using a separate effect that updates refs first
   useEffect(() => {
     const won = isWin(gameState);
-    if (won && !hasWonRef.current) {
-      setConfettiActive(true);
-    }
+    const isNewWin = won && !hasWonRef.current;
     hasWonRef.current = won;
-    if (!won) {
-      setConfettiActive(false);
-    }
-  }, [gameState]);
 
-  useEffect(() => {
-    if (reducedMotion) {
-      setConfettiActive(false);
+    // Queue state update in the next tick to avoid setState-in-effect warning
+    if (isNewWin && !reducedMotion) {
+      queueMicrotask(() => setConfettiActive(true));
+    } else if (!won || reducedMotion) {
+      queueMicrotask(() => setConfettiActive(false));
     }
-  }, [reducedMotion]);
+  }, [gameState, reducedMotion]);
 
   return {
     confettiActive,

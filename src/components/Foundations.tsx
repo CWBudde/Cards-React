@@ -12,7 +12,6 @@ import {
   FoundationPile,
   FoundationEmpty,
   FoundationPlaceholder,
-  FoundationCard,
 } from "./FoundationElements";
 
 interface FoundationsProps {
@@ -62,7 +61,7 @@ export const Foundations = memo(function Foundations({
             width={holderWidth}
             height={holderHeight}
           >
-            {pile.length === 0 ? (
+{pile.length === 0 ? (
               <FoundationEmpty>
                 <FoundationPlaceholder>
                   <SuitSymbolByIndex
@@ -74,26 +73,39 @@ export const Foundations = memo(function Foundations({
                 </FoundationPlaceholder>
               </FoundationEmpty>
             ) : (
-              <FoundationCard>
-                <Card
-                  card={pile[pile.length - 1]}
-                  width={cardWidth}
-                  height={cardHeight}
-                  cardBackStyle={cardBackStyle}
-                  highlight={isTarget && isDropTargetValid}
-                  onPointerDown={
-                    onCardPointerDown
-                      ? (event) => onCardPointerDown(event, index)
-                      : undefined
-                  }
-                  className={
-                    draggingFoundation &&
-                    draggingFoundation.foundationIndex === index
-                      ? "opacity-0 pointer-events-none"
-                      : undefined
-                  }
-                />
-              </FoundationCard>
+              pile.map((card, cardIndex) => (
+                <div
+                  key={card.id}
+                  className="foundation-card absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    zIndex: cardIndex,
+                  }}
+                >
+                  <Card
+                    card={card}
+                    width={cardWidth}
+                    height={cardHeight}
+                    cardBackStyle={cardBackStyle}
+                    highlight={
+                      cardIndex === pile.length - 1 &&
+                      isTarget &&
+                      isDropTargetValid
+                    }
+                    onPointerDown={
+                      cardIndex === pile.length - 1 && onCardPointerDown
+                        ? (event) => onCardPointerDown(event, index)
+                        : undefined
+                    }
+                    className={
+                      cardIndex === pile.length - 1 &&
+                      draggingFoundation &&
+                      draggingFoundation.foundationIndex === index
+                        ? "opacity-0 pointer-events-none"
+                        : undefined
+                    }
+                  />
+                </div>
+              ))
             )}
           </FoundationPile>
         );

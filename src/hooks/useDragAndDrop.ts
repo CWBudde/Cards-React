@@ -17,11 +17,11 @@ import {
   canDropOnTableau,
   getMovableStack,
 } from "../engine";
-import type { GameState } from "../engine";
+import type { GameState, Move } from "../engine";
 
 interface UseDragAndDropProps {
   gameState: GameState;
-  performMove: (move: any) => void;
+  performMove: (move: Move) => void;
 }
 
 interface UseDragAndDropReturn {
@@ -460,16 +460,6 @@ export function useDragAndDrop({
   useEffect(() => {
     pendingDragRef.current = pendingDrag;
   }, [pendingDrag]);
-
-  useEffect(() => {
-    if (dragState) {
-      return;
-    }
-
-    clearHoverTimeout();
-    setHoverTarget(null);
-    setHoverIsValid(false);
-  }, [clearHoverTimeout, dragState]);
 
   useEffect(() => {
     if (!dragState && !pendingDrag) {

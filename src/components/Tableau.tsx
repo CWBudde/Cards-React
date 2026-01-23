@@ -15,6 +15,7 @@ import {
   TableauStack,
   TableauCard,
 } from "./TableauElements";
+import { RankSymbolByIndex } from "./RankSymbol";
 
 interface TableauProps {
   tableau: [Pile, Pile, Pile, Pile, Pile, Pile, Pile, Pile];
@@ -81,7 +82,14 @@ export const Tableau = memo(function Tableau({
           <TableauPile key={pileIndex} pileIndex={pileIndex} width={cardWidth}>
             {/* Always render the placeholder base */}
             <TableauEmpty width={cardWidth} height={cardHeight}>
-              <TableauPlaceholder>K</TableauPlaceholder>
+              <TableauPlaceholder>
+                <RankSymbolByIndex
+                  rankIndex={12}
+                  size={Math.max(18, Math.min(cardWidth, cardHeight) * 0.33)}
+                  color="rgba(0, 0, 0, 0.15)"
+                  className="tableau-rank"
+                />
+              </TableauPlaceholder>
             </TableauEmpty>
 
             {/* Render cards on top of the placeholder */}
