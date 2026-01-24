@@ -73,6 +73,10 @@ export interface TableauToTableauMove extends BaseMove {
   toPile: number; // 0-7
   /** Index of the first card being moved in the source pile */
   cardIndex: number;
+  /** Number of cards that were moved (for undo) */
+  count?: number;
+  /** Whether a card was auto-flipped in the source pile (for undo) */
+  wasFlipped?: boolean;
 }
 
 /**

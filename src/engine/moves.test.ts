@@ -574,8 +574,8 @@ describe("moves", () => {
 
     it("should undo stack move", () => {
       const state = createTestState();
-      state.tableau[0] = [createCard(0, 7), createCard(1, 6), createCard(2, 5)];
-      state.tableau[1] = [createCard(3, 8)];
+      state.tableau[0] = [createCard(0, 7), createCard(1, 6), createCard(0, 5)];
+      state.tableau[1] = [createCard(0, 7)];
 
       const move: TableauToTableauMove = {
         type: MoveType.TableauToTableau,

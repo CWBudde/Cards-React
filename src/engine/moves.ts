@@ -133,13 +133,19 @@ function applyTableauToTableau(
   const cardsToMove = sourcePile.splice(move.cardIndex);
   targetPile.push(...cardsToMove);
 
+  // Track how many cards were moved for undo
+  move.count = cardsToMove.length;
+
   // Auto-flip: if source pile has cards left and top card is face-down, flip it
+  let wasFlipped = false;
   if (sourcePile.length > 0) {
     const topCard = sourcePile[sourcePile.length - 1];
     if (!topCard.faceUp) {
       topCard.faceUp = true;
+      wasFlipped = true;
     }
   }
+  move.wasFlipped = wasFlipped;
 
   // Record move
   state.lastMove = move;
@@ -292,62 +298,56 @@ function undoTableauToTableau(
   const sourcePile = state.tableau[move.fromPile];
   const targetPile = state.tableau[move.toPile];
 
-  // Calculate how many cards to move back
-  // The simplest approach: assume source pile length equals cardIndex (possibly +1 for auto-flip)
-  // Therefore, the original pile had length (cardIndex + N) where N = cards moved
-  // Since we're doing single-step undo, we can calculate N by checking target pile
-  //
-  // Better approach: use the fact that cards in target from some position onwards
-  // are the ones that were moved. Find that position by checking which cards
-  // at the end of target don't "belong" there based on the card below them.
-  let moveCount = 0;
+  // Use stored count if available (new moves), otherwise infer (legacy moves)
+  let moveCount = move.count;
 
-  // Count cards from end of target that form a contiguous face-up sequence
-  // These are candidates for being the moved cards
-  for (let i = targetPile.length - 1; i >= 0; i--) {
-    const card = targetPile[i];
+  if (moveCount === undefined) {
+    // Fallback: try to infer the count for backward compatibility
+    moveCount = 0;
 
-    if (!card.faceUp) {
-      // Face-down cards can't have been moved (moves only move face-up cards)
-      break;
-    }
+    // Count cards from end of target that form a contiguous face-up sequence
+    for (let i = targetPile.length - 1; i >= 0; i--) {
+      const card = targetPile[i];
 
-    if (i === targetPile.length - 1) {
-      // Last card is definitely part of moved stack
-      moveCount = 1;
-      continue;
-    }
+      if (!card.faceUp) {
+        break;
+      }
 
-    const cardBelow = targetPile[i];
-    const cardAbove = targetPile[i + 1];
+      if (i === targetPile.length - 1) {
+        moveCount = 1;
+        continue;
+      }
 
-    // Check if these two cards form a valid tableau sequence
-    // If yes, both could be from the moved stack
-    // If no, only the cards above are from the moved stack
-    if (
-      areOppositeColors(cardBelow.suit, cardAbove.suit) &&
-      cardBelow.rank === cardAbove.rank + 1
-    ) {
-      moveCount++;
-    } else {
-      // Cards below this don't form valid sequence with moved cards
-      // So this is where the moved stack starts
-      break;
+      const currentCard = targetPile[i];
+      const cardAbove = targetPile[i + 1];
+
+      if (
+        areOppositeColors(currentCard.suit, cardAbove.suit) &&
+        currentCard.rank === cardAbove.rank + 1
+      ) {
+        moveCount++;
+      } else {
+        break;
+      }
     }
   }
 
-  // Verify moveCount makes sense: it should not exceed target pile length
+  // Verify moveCount makes sense
   if (moveCount === 0 || moveCount > targetPile.length) {
-    return false;
-  }
-
-  if (targetPile.length < moveCount) {
     return false;
   }
 
   // Move cards back to their original position
   const cardsToReturn = targetPile.splice(targetPile.length - moveCount);
   sourcePile.splice(move.cardIndex, 0, ...cardsToReturn);
+
+  // Undo auto-flip if it occurred
+  if (move.wasFlipped && sourcePile.length > move.cardIndex) {
+    const cardThatWasFlipped = sourcePile[move.cardIndex - 1];
+    if (cardThatWasFlipped && cardThatWasFlipped.faceUp) {
+      cardThatWasFlipped.faceUp = false;
+    }
+  }
 
   // Clear last move
   state.lastMove = null;
