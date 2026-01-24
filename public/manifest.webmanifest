@@ -1,30 +1,84 @@
 {
-  "name": "Cards",
+  "name": "Cards - Modern Solitaire Game",
   "short_name": "Cards",
+  "description": "A modern, beautifully designed solitaire card game. Play the classic 8-pile variant with smooth animations, keyboard shortcuts, and deterministic gameplay.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
+  "categories": ["games", "entertainment"],
+  "lang": "en-US",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/icons/Icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/icons/Icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/icons/Icon-256x256.png",
       "sizes": "256x256",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/icons/Icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Cards game on desktop"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Cards game on mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Game",
+      "short_name": "New",
+      "description": "Start a new game with a random seed",
+      "url": "/?action=new",
+      "icons": [
+        {
+          "src": "/icons/Icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Retry Game",
+      "short_name": "Retry",
+      "description": "Restart the current game from the beginning",
+      "url": "/?action=retry",
+      "icons": [
+        {
+          "src": "/icons/Icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
