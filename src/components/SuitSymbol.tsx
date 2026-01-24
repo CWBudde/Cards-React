@@ -1,6 +1,5 @@
 /**
  * SuitSymbol component - renders a suit symbol using vector paths
- * Ported from legacy Card.Drawer.pas
  */
 
 import { SUIT_PATHS, SUIT_COLORS, type SuitName } from "./CardDrawers";

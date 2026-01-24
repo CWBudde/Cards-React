@@ -1,5 +1,5 @@
 /**
- * Card back ornament - decorative pattern from legacy Delphi code
+ * Card back ornament - decorative pattern
  * Original: TCardDrawerOrnament in Card.Drawer.pas
  * This intricate floral/baroque design is drawn at top and bottom of card backs
  */

@@ -68,7 +68,7 @@ export function runFinish(state: GameState, maxIterations = 200): number {
 
       const topCard = pile[pile.length - 1];
 
-      // Legacy: flip the top card if face-down before considering foundation.
+      // flip the top card if face-down before considering foundation.
       if (!topCard.faceUp) {
         topCard.faceUp = true;
       }
@@ -88,7 +88,7 @@ export function runFinish(state: GameState, maxIterations = 200): number {
         continue;
       }
 
-      // Legacy finish does not affect undo history.
+      // Finish does not affect undo history.
       state.lastMove = previousLastMove;
       state.moveHistory.length = previousHistoryLength;
 

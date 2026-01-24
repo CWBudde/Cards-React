@@ -1,6 +1,6 @@
 /**
  * CardFront component - renders the front of a playing card
- * Uses vector-drawn symbols ported from legacy Card.Drawer.pas
+ * Uses vector-drawn symbols
  *
  * Card layouts:
  * - A-10: Traditional pip layouts showing the count of suit symbols
@@ -43,8 +43,6 @@ export const CardFront = ({
   const suitColor = SUIT_COLORS[suitName];
 
   // Calculate sizes based on card dimensions
-  // Legacy uses SmallFont = width / 36, which with default rank height of 6
-  // gives a final size of width / 6
   const cornerRankSize = Math.max(10, width / 6);
 
   // Face cards (J=10, Q=11, K=12) have different layout

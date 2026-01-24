@@ -28,7 +28,7 @@ function createDeck(): Card[] {
 
 /**
  * Deal a new game with the given seed
- * Implements the legacy dealing algorithm:
+ * Implements the dealing algorithm:
  * 1. Create all 52 cards
  * 2. Randomly distribute to 8 tableau piles with capacities [3,4,5,6,7,8,9,10]
  * 3. First 3 cards in each pile are face-down, rest are face-up
@@ -43,7 +43,7 @@ export function newGame(seed: number): GameState {
   // Create deck
   const undealtCards = createDeck();
 
-  // Deal cards using the algorithm from legacy code
+  // Deal cards using the algorithm
   while (undealtCards.length > 0) {
     // Pick random tableau pile
     const pileIndex = nextInt(rngState, 8);

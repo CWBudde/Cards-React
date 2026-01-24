@@ -1,6 +1,6 @@
 /**
  * Deterministic random number generator
- * Uses Alea algorithm to match legacy behavior.
+ * Uses Alea algorithm.
  */
 
 import type { RngState } from "./types";

@@ -1,6 +1,5 @@
 /**
  * RankSymbol component - renders a rank symbol using vector paths
- * Ported from legacy Card.Drawer.pas
  */
 
 import { RANK_PATHS, type RankName } from "./CardDrawers";
@@ -89,7 +88,7 @@ export const RankSymbolByIndex = ({
 }: RankSymbolByIndexProps) => {
   const rank = RANK_ORDER[rankIndex];
 
-  // Cards 2-9 (rank indices 1-8) get horizontal stretch like legacy
+  // Cards 2-9 (rank indices 1-8) get horizontal stretch
   // NOT Ace (0), 10 (9), J (10), Q (11), K (12)
   // Only apply in corner positions (not in center of face cards)
   const shouldStretch = !disableStretch && rankIndex >= 1 && rankIndex <= 8;

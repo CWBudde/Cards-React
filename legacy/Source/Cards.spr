@@ -1,5 +1,0 @@
-uses
-  Card.Main, Card.Framework;
-
-Application.CreateElement(TMainScreen);
-Application.Run;

@@ -1,5 +1,5 @@
 /**
- * Card vector path data - ported from legacy Card.Drawer.pas
+ * Card vector path data
  * All paths are drawn using Canvas 2D bezier curves and polygons,
  * converted here to SVG path format for use with React components.
  */
