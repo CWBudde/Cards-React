@@ -1,8 +1,7 @@
 /**
  * CardPips component - renders pip layouts for number cards (A-10)
- * Ported from legacy Card.Cards.pas Paint method
  *
- * The legacy code uses a coordinate system where:
+ * The coordinate system uses:
  * - w = 0.8 * card width (the pip area width)
  * - h = 0.6 * card height (the pip area height)
  * - Pips are positioned within this area
@@ -23,7 +22,7 @@ interface PipPosition {
   flipped?: boolean;
 }
 
-// Pip layouts ported from legacy Card.Cards.pas
+// Pip layouts
 // Each layout defines positions as fractions of the pip area (w, h)
 const PIP_LAYOUTS: Record<number, PipPosition[]> = {
   // Ace - single large centered pip (handled specially)
@@ -121,7 +120,7 @@ const PIP_LAYOUTS: Record<number, PipPosition[]> = {
 };
 
 export const CardPips = ({ rank, suit, width, height }: CardPipsProps) => {
-  // Calculate pip area dimensions (matches legacy: w = 0.8 * width, h = 0.6 * height)
+  // Calculate pip area dimensions (w = 0.8 * width, h = 0.6 * height)
   const pipAreaWidth = width * 0.8;
   const pipAreaHeight = height * 0.6;
   const pipAreaLeft = width * 0.1;

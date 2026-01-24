@@ -5,7 +5,6 @@ Modern implementation of a solitaire game clone using Vite + React + TypeScript.
 ## Repository layout
 
 - cards-web: Vite + React + TypeScript app
-- legacy: legacy Delphi + web output (reference only)
 - GAME_SPEC.md: gameplay/spec notes
 - PLAN.md: milestone checklist
 

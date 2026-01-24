@@ -1,6 +1,5 @@
 /**
  * FaceCardCenter component - bordered area with suit symbol and large rank letter
- * Matches legacy layout for J, Q, K from Card.Cards.pas
  */
 
 import {

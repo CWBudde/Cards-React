@@ -4,12 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Modern reimplementation of a legacy Cards solitaire game (see ./legacy/) using Vite + React + TypeScript. This is a **variant** of standard solitaire with 8 tableau piles (instead of 7), variable initial capacities [3-10], and no stock/waste pile - all 52 cards are dealt at game start.
+Modern implementation of a solitaire game using Vite + React + TypeScript. This is a **variant** of standard solitaire with 8 tableau piles (instead of 7), variable initial capacities [3-10], and no stock/waste pile - all 52 cards are dealt at game start.
 
 ## Repository Structure
 
 - **src/**: Vite + React + TypeScript application source
-- **legacy/**: Legacy Delphi + web output (reference only, do not modify unless explicitly asked)
 - **GAME_SPEC.md**: Complete gameplay rules and specifications
 - **PLAN.md**: Milestone-based implementation checklist
 
@@ -39,7 +38,6 @@ The core game logic is a **pure, deterministic TypeScript engine** with no React
 **Key files:**
 
 - `types.ts`: Core data structures (GameState, Card, Move types)
-- `rng.ts`: Mulberry32 PRNG (deterministic per seed, NOT legacy RNG parity)
 - `deal.ts`: Initial card dealing with tableau capacities [3,4,5,6,7,8,9,10]; last 3 cards face-up, rest face-down
 - `moves.ts`: Move validation, `applyMove()`, and single-step `undo()`
 - `helpers.ts`: Finish and Solve algorithms (simple heuristics)
@@ -87,12 +85,11 @@ Implemented in `App.tsx` using Pointer Events API:
 - **Tableau to Tableau**: Moving stack must be contiguous, all face-up, alternating colors, descending rank. Empty piles accept Kings only.
 - **Tableau to Foundation**: Only top card can move. Aces start foundations, then same-suit ascending by 1.
 - **Auto-flip**: Newly exposed tableau top cards flip automatically after moves.
-- **Undo**: Single-step only (matches legacy behavior).
+- **Undo**: Single-step only.
 - **Face-down cards**: Determined by formula `card.faceUp = (nextPileLength > capacity - 3)` during dealing.
 
 ### RNG & Determinism
 
-- **No legacy RNG parity**: Uses Mulberry32 instead of Alea for simplicity
 - **Deterministic per seed**: Same seed always produces same deal
 - **Seed generation**: `Date.now()` for new games
 - **Seed persistence**: Stored in localStorage as `cards-last-seed`
@@ -118,8 +115,6 @@ Implemented in `App.tsx` using Pointer Events API:
 - Test dealing counts, pile sizes, color alternation, foundation rules, move validation
 - Run with `yarn test`
 
-**No golden seed tests:** Project explicitly chose NOT to require exact legacy RNG parity, focusing instead on correct rule implementation.
-
 ## Key Reference Documents
 
 When modifying game behavior, always consult:
@@ -130,7 +125,6 @@ When modifying game behavior, always consult:
 
 ## Common Pitfalls
 
-- **Don't ever modify legacy/**: Reference only, changes go in src/
 - **Engine mutations**: Engine functions mutate in place; React layer must clone
 - **Responsive layout**: Card dimensions derive from viewport via `useLayout()`, recalculated on resize
 - **Face-down count**: Last 3 cards in each pile are face-up; all others are face-down (i.e., max(0, capacity - 3) face-down cards)

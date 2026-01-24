@@ -298,7 +298,7 @@ function undoTableauToTableau(
   const sourcePile = state.tableau[move.fromPile];
   const targetPile = state.tableau[move.toPile];
 
-  // Use stored count if available (new moves), otherwise infer (legacy moves)
+  // Use stored count if available (new moves), otherwise infer
   let moveCount = move.count;
 
   if (moveCount === undefined) {

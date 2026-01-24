@@ -64,14 +64,13 @@ function calculateDimensions(): LayoutDimensions {
   // Pile stacking offset: max of height/5.1 or viewport/32 (from original)
   const tableauOverlap = Math.max(cardHeight / 5.1, viewportHeight / 32);
 
-  // Foundation spacing: wider gaps to match legacy feel
+  // Foundation spacing: wider gaps
   const foundationSpacing = cardWidth * 0.26;
 
   // Tableau spacing: tighter than foundations
   const tableauSpacing = cardWidth * 0.1;
 
   // Calculate tableau top offset (where tableau piles start)
-  // This matches the legacy positioning: foundations + margin
   const tableauTopOffset = Math.max(
     cardHeight + 20, // Card height + some margin
     0.12 * viewportHeight + cardHeight
@@ -89,7 +88,7 @@ function calculateDimensions(): LayoutDimensions {
 
 /**
  * Calculate dynamic overlap distance for a specific pile to ensure all cards fit in viewport
- * This implements the legacy algorithm that reduces spacing when cards would overflow
+ * This implements the algorithm that reduces spacing when cards would overflow
  */
 export function calculatePileOverlap(
   pile: Pile,

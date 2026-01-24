@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document specifies the rules and behavior of the Cards solitaire game based on the legacy implementation.
+This document specifies the rules and behavior of a solitaire game.
 
 ## Card Representation
 
@@ -42,37 +42,17 @@ Each card has:
 
 ## Random Number Generator (RNG)
 
-### Implementation
-
-The legacy uses the **Alea** RNG algorithm:
-
-```javascript
-function $alea() {
-  // Alea PRNG implementation
-  // State: s0, s1, s2, c
-  // Formula: t = 2091639*s0 + c*2.3283064365386963e-10
-  // Returns: deterministic sequence based on seed
-}
-```
-
 ### Seeding
 
 - **SetRandSeed(v)**: Initializes RNG with specific seed value
 - **Seed display**: Current seed is shown on screen
 - **Seed storage**: Last seed stored in localStorage as "SeedIndex"
 
-### RNG Parity Decision
-
-**Decision: Use legacy Alea RNG for parity**
-
-- Modern implementation uses the Alea PRNG to match legacy sequences
-- Requirement: Deterministic per seed (same seed = same deal)
-
 ## Dealing Rules
 
 ### Deal Algorithm
 
-```
+```plain
 1. Create deck of 52 cards (4 suits × 13 ranks)
 2. Initialize RNG with seed
 3. Initialize empty array for undealt cards
@@ -164,12 +144,11 @@ A card can move from foundation back to tableau following normal tableau rules:
      - Check if it can safely move to foundation
      - If yes, move it and repeat
   3. Continue until no more moves possible
-- **Implementation**: Legacy uses 10ms setTimeout loop to animate moves
 
 ### Solve
 
 - **Purpose**: Attempt to automatically complete the game
-- **Algorithm** (Legacy heuristic approach):
+- **Algorithm**:
   1. Try "Finish" first (safe foundation moves)
   2. If no finish moves, try smart tableau-to-tableau moves:
      - Prefer moves that free face-down cards
@@ -181,7 +160,7 @@ A card can move from foundation back to tableau following normal tableau rules:
 
 ### Undo
 
-- **Scope**: Single-step undo (legacy implementation)
+- **Scope**: Single-step undo
 - **State Tracking**:
   - Stores last move: source pile, destination pile, cards moved
   - Only one undo available at a time
@@ -192,7 +171,7 @@ A card can move from foundation back to tableau following normal tableau rules:
 
 ### Hover/Target Highlighting
 
-- **Delay**: 500ms delay before highlighting (legacy uses setTimeout)
+- **Delay**: 500ms delay before highlighting
 - **Highlight**: Candidate drop targets are highlighted during drag
 - **Visual**: Top card of valid target piles shows visual feedback
 
@@ -204,7 +183,7 @@ A card can move from foundation back to tableau following normal tableau rules:
 ### Resize Behavior
 
 - **Card dimensions**: Derive from viewport size
-- **Formula (legacy)**:
+- **Formula**:
   ```javascript
   width = Math.min(window.innerWidth, (4 * window.innerHeight) / 3);
   cardWidth = width / 9;
