@@ -1,6 +1,6 @@
 # Cards
 
-Modern implementation of a solitaire game clone using Vite + React + TypeScript. [Try it online](https://meko-christian.github.io/Cards/).
+Modern implementation of a solitaire game clone using Vite + React + TypeScript. [Try it online](https://cwbudde.github.io/Cards-React/).
 
 ## Quick start
 
