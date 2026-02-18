@@ -52,7 +52,7 @@ export const Tableau = memo(function Tableau({
 }: TableauProps) {
   return (
     <div
-      className="flex justify-center items-start p-5 flex-1 overflow-y-auto flex-wrap"
+      className="flex justify-center items-start px-1 py-2 flex-1 overflow-y-auto flex-wrap"
       style={{ gap: `${spacing}px` }}
     >
       {tableau.map((pile, pileIndex) => {
